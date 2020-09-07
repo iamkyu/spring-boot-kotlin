@@ -1,5 +1,6 @@
 package io.iamkyu.sbk.web.api
 
+import io.iamkyu.sbk.config.BlogProperties
 import io.iamkyu.sbk.domain.Article
 import io.iamkyu.sbk.domain.ArticleRepository
 import io.iamkyu.sbk.utils.format
@@ -13,11 +14,13 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.server.ResponseStatusException
 
 @Controller
-class HtmlController(private val articleRepository: ArticleRepository) {
+class HtmlController(private val articleRepository: ArticleRepository,
+                     private val blogProperties: BlogProperties) {
 
     @GetMapping("/")
     fun blog(model: Model): String {
-        model["title"] = "My First Blog"
+        model["title"] = blogProperties.title
+        model["banner"] = blogProperties.banner
         model["articles"] = articleRepository.findAllByOrderByAddedAtDesc().map { it.render() }
         return "blog"
     }
