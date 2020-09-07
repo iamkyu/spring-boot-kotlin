@@ -6,6 +6,15 @@ plugins {
     kotlin("jvm") version "1.3.72"
     kotlin("plugin.spring") version "1.3.72"
     kotlin("plugin.jpa") version "1.3.72"
+    kotlin("plugin.allopen") version "1.3.72"
+}
+
+// 코틀린의 모든 클래스는 기본적으로 final.
+// 따라서 상속 등이 불가. JPA 는 엔티티 클래스를 상속하여 프록시 방식으로 처리. 이를 해결하기 위한 플러그인
+allOpen {
+    annotation("javax.persistence.Entity")
+    annotation("javax.persistence.Embeddable")
+    annotation("javax.persistence.MappedSuperclass")
 }
 
 group = "io.iamkyu"
